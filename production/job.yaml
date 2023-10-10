@@ -1,0 +1,10 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: .
+command: <MISSING> --trainingdata ${{ inputs.training_data }}
+inputs:
+  training_data:
+    <MISSING>
+environment: azureml://registries/azureml/environments/sklearn-1.1/versions/14
+compute: <MISSING>
+experiment_name: <MISSING>
+description: Practical3 demo
