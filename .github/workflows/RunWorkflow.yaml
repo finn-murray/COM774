@@ -30,7 +30,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Step 5: Submit Job to AzureML
+    # Step 5: Submit Job to AzureML p
     - name: Submit Job to AzureML
       run: |
         az ml job create --file job.yaml \
