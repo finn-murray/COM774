@@ -1,0 +1,38 @@
+name: AzureML Job Workflow
+
+# Trigger the workflow on pushes to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  submit-azureml-job:
+    name: Submit Job to AzureML
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # Step 2: Install Azure CLI
+    - name: Install Azure CLI
+      uses: azure/CLI@v1
+
+    # Step 3: Install Azure ML CLI Extension
+    - name: Install Azure ML CLI extension
+      run: az extension add --name ml
+
+    # Step 4: Login to Azure using Service Principal
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Step 5: Submit Job to AzureML
+    - name: Submit Job to AzureML
+      run: |
+        az ml job create --file job.yaml \
+                         --resource-group project-finn \
+                         --workspace-name Project
