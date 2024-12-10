@@ -38,7 +38,7 @@ jobs:
       # Step 6: Submit Job to AzureML
       - name: Submit Job to AzureML
         run: |
-          az ml job create --file job.yaml \
+          az ml job create --file production/job.yaml \
                            --resource-group project-finn \
                            --workspace-name Project
 
