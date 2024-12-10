@@ -31,7 +31,7 @@ def load_image_data(directory):
                     try:
                         # Load and preprocess image
                         img = Image.open(img_path).convert("L")  # Convert to grayscale
-                        img = img.resize((512, 512))  # Resize to 64x64 pixels
+                        img = img.resize((256, 256))  # Resize to 64x64 pixels
                         img_array = np.array(img).flatten()  # Flatten to 1D
                         images.append(img_array)
                         labels.append(current_label)  # Assign the current folder's label
@@ -124,7 +124,7 @@ with mlflow.start_run():
     # Analyze errors
     misclassified_indices = np.where(Y_pred != Y_test)[0]
     for idx in misclassified_indices[:10]:  # Log first 10 misclassifications
-        img = X_test[idx].reshape(512, 512)  # Assuming images are 64x64
+        img = X_test[idx].reshape(256, 256)  # Assuming images are 64x64
         true_label = reverse_label_map[Y_test[idx]]
         pred_label = reverse_label_map[Y_pred[idx]]
         plt.imshow(img, cmap="gray")
