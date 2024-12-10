@@ -12,27 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    # Step 2: Install Azure CLI
-    - name: Install Azure CLI
-      uses: azure/CLI@v1
+      # Step 2: Install Azure CLI
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-    # Step 3: Install Azure ML CLI Extension
-    - name: Install Azure ML CLI extension
-      run: az extension add --name ml
+      # Step 3: Install Azure ML CLI Extension
+      - name: Install Azure ML CLI extension
+        run: az extension add --name ml
 
-    # Step 4: Login to Azure using Service Principal
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # Step 4: Login to Azure using Service Principal
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Step 5: Submit Job to AzureML p
-    - name: Submit Job to AzureML
-      run: |
-        az ml job create --file job.yaml \
-                         --resource-group project-finn \
-                         --workspace-name Project
+      # Step 5: Set Azure Subscription
+      - name: Set Azure Subscription
+        run: az account set --subscription d4bc14bc-48a0-49cd-ae3f-8caaa4c710a9
+
+      # Step 6: Submit Job to AzureML
+      - name: Submit Job to AzureML
+        run: |
+          az ml job create --file job.yaml \
+                           --resource-group project-finn \
+                           --workspace-name Project
+
